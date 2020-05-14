@@ -1,46 +1,22 @@
-
-class Actors {
-  List<ActorModel> items = new List();
-
-  Actors();
-  Actors.fromJsonList( List<dynamic> jsonList  ) {
-
-    if ( jsonList == null ) return;
-
-    for ( var item in jsonList  ) {
-      final season = new ActorModel.fromJsonMap(item);
-      items.add( season );
-    }
-
-  }
-
-}
-
-class ActorModel {
+class DirectorModel {
   int id;
-  String name;
   String creditId;
-  String character;
-  int order;
+  String name;
   int gender;
   String profilePath;
 
-  ActorModel({
+  DirectorModel({
     this.id,
-    this.name,
     this.creditId,
-    this.character,
-    this.order,
+    this.name,
     this.gender,
     this.profilePath,
   });
 
-  ActorModel.fromJsonMap(Map<String, dynamic> json){
+  DirectorModel.fromJsonMap(Map<String, dynamic> json){
     id          = json['id'].cast<int>();
-    name        = json['name'];
     creditId    = json['credit_id'];
-    character   = json['character'];
-    order       = json['order'].cast<int>();
+    name        = json['name'];
     gender      = json['gender'].cast<int>();
     profilePath = json['profile_path'];
   }
