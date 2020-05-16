@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tv_shows/src/models/tvShowModel.dart';
 
+import 'package:flutter_tv_shows/src/models/tvShowModel.dart';
 import 'package:flutter_tv_shows/src/providers/tvShowProvider.dart';
 import 'package:flutter_tv_shows/src/search/searchDelegate.dart';
 import 'package:flutter_tv_shows/src/widgets/cardHorizontalScroll.dart';
@@ -9,7 +9,6 @@ import 'package:flutter_tv_shows/src/widgets/cardSwiper.dart';
 
 class HomePage extends StatelessWidget {
   final tvShowsProvider =  new TvShowProvider();
-  // const HomePage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,6 @@ class HomePage extends StatelessWidget {
                 showSearch(
                 context: context, 
                 delegate: DataSearch(),
-                // query: 'Hola'
                 );
               })
       ],),
@@ -55,6 +53,7 @@ class HomePage extends StatelessWidget {
 
 
   // --------------------Widgets--------------------         
+  
   Widget _trendTvShowsSwiper() { 
     return FutureBuilder(
       future: tvShowsProvider.getPopularTvShows(),
@@ -123,11 +122,11 @@ class HomePage extends StatelessWidget {
         );
       }else{
         return Container(
-                  height: 350.0,
-                  child: Center(
-                    child: CircularProgressIndicator()
-                  )
-                );
+          height: 350.0,
+          child: Center(
+            child: CircularProgressIndicator()
+          )
+        );
       }
     },
   );
@@ -140,8 +139,6 @@ class HomePage extends StatelessWidget {
     // );
   }
   
-  
-
   Widget _horizontalStructure(String tvShowName, String route,Stream<List<TvShowModel>> dataStream ){
     return Container(
       width : double.infinity,

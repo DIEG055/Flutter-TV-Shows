@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_tv_shows/src/models/tvShowModel.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -10,7 +11,8 @@ class SearchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final item =  Container(
+      color: Colors.transparent,
       margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 10),
       child: Row(
         children:<Widget>[
@@ -77,5 +79,13 @@ class SearchCard extends StatelessWidget {
         ] 
       ),
     );
+
+    return GestureDetector(
+      child: item,
+      onTap: (){
+        Navigator.pushNamed(context, 'tvShowDetails', arguments: show );
+      },
+    );
+
   }
 }

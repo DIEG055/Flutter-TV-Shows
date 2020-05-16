@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+
+import 'package:flutter_tv_shows/src/models/networkModel.dart';
 import 'package:flutter_tv_shows/src/models/tvShowModel.dart';
 import 'package:flutter_tv_shows/src/providers/tvShowProvider.dart';
+import 'package:flutter_tv_shows/src/widgets/seasonCard.dart';
 
 class ShowDetailspage extends StatelessWidget {
-
-
 
   @override
   Widget build(BuildContext context) {
     
-  final TvShowModel show = ModalRoute.of(context).settings.arguments;
+  final TvShowModel show        = ModalRoute.of(context).settings.arguments;
   final TvShowProvider provider = TvShowProvider();
-  final showInfo = provider.getTvShowById(show.id);
+  final showInfo                = provider.getTvShowById(show.id);
+  final similarShowsInfo        = provider.getSimilarTvShowById(show.id);
 
     return Container(
       child: Scaffold(
         body:CustomScrollView(
           slivers:<Widget>[
-            _appbar(show),
-            
+            _appbar(show),  
             FutureBuilder(
               future: showInfo,
               builder: (context, AsyncSnapshot<TvShowModel> snapshot){
@@ -30,9 +31,13 @@ class ShowDetailspage extends StatelessWidget {
                         _showMainInfo(show,context),
                         _showDetailInfo(show,context),
                         SizedBox(height: 30.0),
-                        _overviewinfo(show,context),
-                    ]),
-            );       
+                        _overviewInfo(show,context),
+                        _nertworkInfo(show,context),
+                        _seasonInfo(show,context),
+                        _similarShowsInfo(similarShowsInfo, context)
+                      ]
+                    ),
+                  );       
                 }else{
                   return SliverList(
                     delegate: SliverChildListDelegate([Center(child: CircularProgressIndicator())])); 
@@ -126,14 +131,12 @@ class ShowDetailspage extends StatelessWidget {
                 "Country",
                 style: TextStyle(fontSize: 15.0,color: Colors.black38),
                 )
-
             ],
             ),
           ),
           VerticalDivider(
             color: Colors.purple,
             thickness: 3.0,
-            
           ),
           Expanded(
               child: Column(
@@ -147,7 +150,6 @@ class ShowDetailspage extends StatelessWidget {
                 "Language",
                 style: TextStyle(fontSize: 15.0,color: Colors.black38),
                 )
-
             ],
             ),
           ),
@@ -185,14 +187,11 @@ class ShowDetailspage extends StatelessWidget {
         ],
         ),
     );
-
-
   }
 
   _showDetailInfo(TvShowModel show, BuildContext context) {
 
     final _screenSize = MediaQuery.of(context).size;
-
     Widget _info(String text,String content) {
       return Row(
         children: <Widget>[
@@ -227,11 +226,9 @@ class ShowDetailspage extends StatelessWidget {
         _info("First Episode:", show.firstAirDate)
       ],)
     );
-    
   }
 
-  _overviewinfo(TvShowModel show, BuildContext context) {
-  
+  _overviewInfo(TvShowModel show, BuildContext context) {
     final _screenSize = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.only(
@@ -245,7 +242,7 @@ class ShowDetailspage extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(
             "Overview",
-            style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),
             textAlign:TextAlign.left,)),
           SizedBox(height: 5.0,),
           Text(
@@ -256,11 +253,187 @@ class ShowDetailspage extends StatelessWidget {
         ],
       ),
     );
-    
   }
 
+  _nertworkInfo(TvShowModel show, BuildContext context) {
 
+    final _screenSize = MediaQuery.of(context).size;
+  _networkImage(NetworkModel network){
+    return Container(
+        // decoration: BoxDecoration(border: Border.all(width:1)),
+      margin: EdgeInsets.symmetric(horizontal: 10.0),
+      child: FadeInImage(
+        image: NetworkImage( network.getLogoImg()),
+        placeholder: AssetImage('assets/img/no-image.jpg'),
+        fit: BoxFit.scaleDown,
+        ),
+    );
+  }
+    return Container(
+    margin: EdgeInsets.only(
+      left: _screenSize.width*0.05,
+      right: _screenSize.width*0.05,
+      top: 10.0
+      ),
+    child: Column(
+      children: <Widget>[
+      Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          "Networks",
+          style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),
+          textAlign:TextAlign.left,)),
+        SizedBox(height: 5.0,),
+        SizedBox(
+          height: _screenSize.height*0.05,
+            child: PageView.builder(
+            pageSnapping: false,
+            controller: PageController(
+              viewportFraction: 0.33,
+              initialPage: 0
+            ),
+            itemCount: show.networks.items.length,
+            itemBuilder: (context, i) =>_networkImage( show.networks.items[i]),
+          ),
+        ),
+      ],
+    ),
+  );
+  }
 
+  _seasonInfo(TvShowModel show, BuildContext context) {
+    return Container(
+      width : double.infinity,
+      child: Column( 
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top:25.0,bottom: 5,left: 25.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: Row(
+                children:<Widget>[ 
+                  Expanded(
+                    child: Text("Seasons", 
+                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25.0),
+                      ),
+                  ),
+                  IconButton(
+                    color: Colors.deepPurple,
+                    icon: Icon(Icons.arrow_forward),
+                    onPressed: (){
+                // route
+              },)
+                ]
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 200.0,
+            child: PageView.builder(
+              pageSnapping: false,
+              controller: PageController(
+                viewportFraction: 0.3,
+                initialPage: 1
+              ),
+              itemCount: show.seasons.items.length,
+              itemBuilder: (context, i) =>SeasonCard(context: context,  season:show.seasons.items[i] ),
+            ),
+          )
+      ],)
+    );
+  }
+
+  _similarShowsInfo(Future<List<TvShowModel>> showFuture, BuildContext context) {
+
+    final _screenSize = MediaQuery.of(context).size;
+
+    return Container(
+      margin: EdgeInsets.only(
+        left: _screenSize.width*0.05,
+        right: _screenSize.width*0.05,
+        top: 10.0,
+        bottom: 20.0
+        ),
+      child: Column(
+        children: <Widget>[
+          Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Similar",
+            style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),
+            textAlign:TextAlign.left,)),
+          SizedBox(height: 5.0,),
+          FutureBuilder(
+            future: showFuture,
+            builder: (BuildContext context, AsyncSnapshot<List<TvShowModel>>  snapshot) {
+              if(snapshot.hasData){
+                final shows = snapshot.data;
+                return Column(
+                  children: shows.map((show) {
+                  return Container(
+                    margin: EdgeInsets.symmetric(vertical: 3.0),
+                    child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Stack(
+                children:  <Widget>[
+                  FadeInImage(
+                    height: _screenSize.height*0.15,
+                    width: double.infinity,
+                    image: NetworkImage( show.getBackdropImage()),
+                    placeholder: AssetImage('assets/img/no-image.jpg'),
+                    fit: BoxFit.cover, 
+                  ),
+                  Container(
+                    height: _screenSize.height*0.15,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      gradient: LinearGradient(
+                        begin: FractionalOffset.topCenter,
+                        end: FractionalOffset.bottomCenter,
+                        colors: [
+                          Colors.grey.withOpacity(0.0),
+                          Colors.black.withOpacity(0.7),
+                        ],
+                        stops: [
+                          0.0,
+                          1.0
+                        ]
+                      )
+                    ),
+                  ),
+                  Positioned(
+                      bottom: 10,
+                      left: 10,
+                      child: 
+                      Text(
+                      show.name,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,fontSize: 20),
+                        overflow: TextOverflow.ellipsis, // DOESN'T WORKD
+                      ),
+                  )
+                ]
+                
+              ),
+          ),
+                      ); 
+                      }).toList(),
+                );
+              }else{
+                return Container(
+                height: 400.0,
+                child: Center(
+                  child: CircularProgressIndicator()
+                )
+              );
+              }
+            },
+            ),
+        ],
+      ),
+    );
+  }
 
 
 }

@@ -1,23 +1,20 @@
 import 'package:flutter_tv_shows/src/models/directorModel.dart';
-import 'package:flutter_tv_shows/src/models/episodeModel.dart';
+import 'package:flutter_tv_shows/src/models/genreModel.dart';
+import 'package:flutter_tv_shows/src/models/networkModel.dart';
 import 'package:flutter_tv_shows/src/models/seasonModel.dart';
-
 
 class TvShows {
 
   List<TvShowModel> items = new List();
 
   TvShows();
-
   TvShows.fromJsonList( List<dynamic> jsonList  ) {
 
     if ( jsonList == null ) return;
-
     for ( var item in jsonList  ) {
       final tvShow = new TvShowModel.fromJsonMap(item);
       items.add( tvShow );
     }
-
   }
 
 }
@@ -36,7 +33,7 @@ class TvShowModel {
   dynamic lastEpisodeToAir;
   String name;
   dynamic nextEpisodeToAir;
-  List<dynamic> networks;
+  Networks networks;
   int numberOfEpisodes;
   int numberOfSeasons;
   List<dynamic> originCountry;
@@ -46,7 +43,7 @@ class TvShowModel {
   double popularity;
   String posterPath;
   List<dynamic> productionCompanies;
-  List<dynamic> seasons;
+  Seasons seasons;
   String status;
   String type;
   double voteAverage;
@@ -85,19 +82,15 @@ class TvShowModel {
 
   TvShowModel.fromJsonMap(Map<String, dynamic> json ){
     backdropPath        = json['backdrop_path'];
-    director            = Directors.fromJsonList( json['created_by']) ;
     episodeRunTime      = json['episode_run_time'];
     firstAirDate        = json['first_air_date'];
-    genres               = Genres.fromJsonList(json['genres']);
     homepage            = json['homepage'];
     id                  = json['id'];
     inProduction        = json['in_production'];
     languages           = json['languages'];
     lastAirDate         = json['last_air_date'];
-    // lastEpisodeToAir    = json['last_episode_to_air'];
     name                = json['name'];
     nextEpisodeToAir    = json['next_episode_to_air'];
-    networks            = json['networks'];
     numberOfEpisodes    = json['number_of_episodes'];
     numberOfSeasons     = json['number_of_seasons'];
     originCountry       = json['origin_country'];
@@ -107,11 +100,14 @@ class TvShowModel {
     popularity          = json['popularity'];
     posterPath          = json['poster_path'];
     productionCompanies = json['production_companies'];
-    // seasons             = json['seasons'];
     status              = json['status'];
     type                = json['type'];
     voteAverage         = json['vote_average']/1;
     voteCount           = json['vote_count'];
+    genres              = Genres.fromJsonList(json['genres']);
+    networks            = Networks.fromJsonList(json['networks']);
+    seasons             = Seasons.fromJsonList(json['seasons']);
+    director            = Directors.fromJsonList( json['created_by']) ;
   }
 
   getPosterImage(){
@@ -130,40 +126,17 @@ class TvShowModel {
     }
   }
 
-}
-
-class Genres{
-
-  List<Genre> items = new List();
-  Genres();
-  Genres.fromJsonList(List<dynamic> jsonList){
-    
-    if ( jsonList == null ) return;
-
-    for ( var item in jsonList  ) {
-      final director = new Genre.fromJsonMap(item);
-      items.add( director );
+  getNetworkdImage(int i) {
+    if ( backdropPath == null ) {
+      return 'https://www.oaxaca.gob.mx/consejeriajuridica/wp-content/uploads/sites/19/2019/05/no-photo.png';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
     }
   }
 
 }
 
 
-class Genre {
-  int id;
-  String name;
-
-  Genre({
-    this.id,
-    this.name,
-  });
-
-  Genre.fromJsonMap(Map<String, dynamic> json){
-    id   = json['id'];
-    name = json['name']; 
-
-  }
-}
 
 
 

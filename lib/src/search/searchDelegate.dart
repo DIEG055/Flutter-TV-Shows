@@ -66,44 +66,17 @@ class DataSearch extends SearchDelegate {
                 return SearchCard(show: show);
               }).toList()
             );
-
           } else {
             return Center(
               child: CircularProgressIndicator()
             );
           }
-
       },
     );
 
 
   }
 
-  // @override
-  // Widget buildSuggestions(BuildContext context) {
-  //   // Son las sugerencias que aparecen cuando la persona escribe
-
-  //   final listaSugerida = ( query.isEmpty ) 
-  //                           ? peliculasRecientes
-  //                           : peliculas.where( 
-  //                             (p)=> p.toLowerCase().startsWith(query.toLowerCase()) 
-  //                           ).toList();
-
-
-  //   return ListView.builder(
-  //     itemCount: listaSugerida.length,
-  //     itemBuilder: (context, i) {
-  //       return ListTile(
-  //         leading: Icon(Icons.movie),
-  //         title: Text(listaSugerida[i]),
-  //         onTap: (){
-  //           seleccion = listaSugerida[i];
-  //           showResults( context );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
 
 }
 

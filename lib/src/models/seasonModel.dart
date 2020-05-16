@@ -1,21 +1,17 @@
 import 'package:flutter_tv_shows/src/models/episodeModel.dart';
 
-
 class Seasons {
 
   List<SeasonModel> items = new List();
 
   Seasons();
-
   Seasons.fromJsonList( List<dynamic> jsonList  ) {
 
-    if ( jsonList == null ) return;
-
+  if ( jsonList == null ) return;
     for ( var item in jsonList  ) {
       final season = new SeasonModel.fromJsonMap(item);
       items.add( season );
     }
-
   }
 
 }
@@ -42,19 +38,19 @@ class SeasonModel {
   });
 
   SeasonModel.fromJsonMap(Map<String, dynamic> json ){
-    airDate  = json['airDate'];
-    episodeCount = json['episode_count'].cast<int>();
-    id           = json['id'].cast<int>();
+    airDate      = json['airDate'];
+    episodeCount = json['episode_count'];
+    id           = json['id'];
     name         = json['name'];
     overview     = json['overview'];
-    posterPath   = json['poste_path'];
-    seasonNumber = json['season_number'].cast<int>();
-    episodes    = json['episodes'];
+    posterPath   = json['poster_path'];
+    seasonNumber = json['season_number'];
+    episodes     = json['episodes'];
   }
 
   getPosterImg() {
     if ( posterPath == null ) {
-      return 'https://cdn11.bigcommerce.com/s-auu4kfi2d9/stencil/59512910-bb6d-0136-46ec-71c445b85d45/e/933395a0-cb1b-0135-a812-525400970412/icons/icon-no-image.svg';
+      return 'https://www.oaxaca.gob.mx/consejeriajuridica/wp-content/uploads/sites/19/2019/05/no-photo.png';
     } else {
       return 'https://image.tmdb.org/t/p/w500/$posterPath';
     }

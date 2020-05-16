@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_tv_shows/src/models/tvShowModel.dart';
 
@@ -21,7 +22,7 @@ class CardSwiper extends StatelessWidget {
       viewportFraction: 0.75,
       scale: 0.8,
       itemBuilder: (BuildContext context,int index){
-        return ClipRRect(
+        final item = ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: Stack(
             children:  <Widget>[
@@ -65,6 +66,13 @@ class CardSwiper extends StatelessWidget {
             
           ),
       );
+
+      return GestureDetector(
+      child: item,
+      onTap: (){
+        Navigator.pushNamed(context, 'tvShowDetails', arguments: tvShows[index] );
+      },
+    );
     },
   ),
   decoration: BoxDecoration(

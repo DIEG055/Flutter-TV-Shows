@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_tv_shows/src/models/tvShowModel.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:flutter_tv_shows/src/models/tvShowModel.dart';
 
 class TvShowProvider{
 
@@ -123,7 +124,8 @@ class TvShowProvider{
     return await _requestData(url);
   }
 
-    Future<List<TvShowModel>> searchTvShowsByName(String name) async {
+
+  Future<List<TvShowModel>> searchTvShowsByName(String name) async {
     final url = Uri.https(_url, '3/search/tv', {
       'api_key'  : _apikey,
       'page' : 1.toString(),
@@ -131,6 +133,8 @@ class TvShowProvider{
     });
     return await _requestData(url);
   }
+  
+  
   Future<TvShowModel> getTvShowById(int id) async {
     final url = Uri.https(_url, '3/tv/$id', {
       'api_key'  : _apikey,
@@ -139,8 +143,17 @@ class TvShowProvider{
     final resp = await http.get( url );
     final decodedData = json.decode(resp.body);
     final show = TvShowModel.fromJsonMap(decodedData);
-    print(decodedData);
     return show;
+  }
+
+
+  Future<List<TvShowModel>> getSimilarTvShowById(int id) async {
+    final url = Uri.https(_url, '3/tv/$id/similar', {
+      'api_key'  : _apikey,
+      'language' : _language,
+      'page'     : 1.toString()
+    });
+    return await _requestData(url);
   }
 
 

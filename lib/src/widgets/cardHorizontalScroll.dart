@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_tv_shows/src/models/tvShowModel.dart';
 import 'package:flutter_tv_shows/src/widgets/tvShowCard.dart';
 
@@ -9,7 +9,6 @@ class CardHorizonalScroll extends StatelessWidget {
   final Function nextPage;
 
   CardHorizonalScroll({@required this.tvShows, @required this.nextPage});
-
 
   final _pageController = new PageController(
     initialPage: 0,

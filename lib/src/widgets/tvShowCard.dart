@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_tv_shows/src/models/tvShowModel.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -39,36 +40,35 @@ class TvShowCard extends StatelessWidget {
             Flexible(
               child: Text(
                 show.name,
-                // overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           Container(
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Row(
-                children: <Widget>[
-                  SmoothStarRating(
-                    allowHalfRating: false,
-                    onRated: (v) {
-                    },
-                    starCount: 5,
-                    rating: (show.voteAverage/2),
-                    size: 20.0,
-                    halfFilledIconData:  Icons.star_half,
-                    filledIconData: Icons.star,
-                    color: Colors.purple,
-                    borderColor: Colors.purple,
-                    spacing:0.1
-                  ),
-                  SizedBox(width: 5.0),
-                  Text(
-                    ((show.voteAverage/2).toStringAsFixed(1)),
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )
-                ],
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Row(
+              children: <Widget>[
+                SmoothStarRating(
+                  allowHalfRating: false,
+                  onRated: (v) {
+                  },
+                  starCount: 5,
+                  rating: (show.voteAverage/2),
+                  size: 20.0,
+                  halfFilledIconData:  Icons.star_half,
+                  filledIconData: Icons.star,
+                  color: Colors.purple,
+                  borderColor: Colors.purple,
+                  spacing:0.1
                 ),
+                SizedBox(width: 5.0),
+                Text(
+                  ((show.voteAverage/2).toStringAsFixed(1)),
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
+              ],
               ),
+            ),
           )
           ],
         ),

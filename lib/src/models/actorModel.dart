@@ -1,4 +1,3 @@
-
 class Actors {
   List<ActorModel> items = new List();
 
@@ -6,12 +5,10 @@ class Actors {
   Actors.fromJsonList( List<dynamic> jsonList  ) {
 
     if ( jsonList == null ) return;
-
     for ( var item in jsonList  ) {
       final season = new ActorModel.fromJsonMap(item);
       items.add( season );
     }
-
   }
 
 }
@@ -47,7 +44,7 @@ class ActorModel {
 
   getProfileImg() {
     if ( profilePath == null ) {
-      return 'https://cdn11.bigcommerce.com/s-auu4kfi2d9/stencil/59512910-bb6d-0136-46ec-71c445b85d45/e/933395a0-cb1b-0135-a812-525400970412/icons/icon-no-image.svg';
+      return 'https://www.oaxaca.gob.mx/consejeriajuridica/wp-content/uploads/sites/19/2019/05/no-photo.png';
     } else {
       return 'https://image.tmdb.org/t/p/w500/$profilePath';
     }
