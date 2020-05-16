@@ -1,3 +1,23 @@
+
+class Directors {
+
+  List<DirectorModel> items = new List();
+
+  Directors();
+
+  Directors.fromJsonList( List<dynamic> jsonList  ) {
+
+    if ( jsonList == null ) return;
+
+    for ( var item in jsonList  ) {
+      final director = new DirectorModel.fromJsonMap(item);
+      items.add( director );
+    }
+
+  }
+
+}
+
 class DirectorModel {
   int id;
   String creditId;
@@ -14,10 +34,10 @@ class DirectorModel {
   });
 
   DirectorModel.fromJsonMap(Map<String, dynamic> json){
-    id          = json['id'].cast<int>();
+    id          = json['id'];
     creditId    = json['credit_id'];
     name        = json['name'];
-    gender      = json['gender'].cast<int>();
+    gender      = json['gender'];
     profilePath = json['profile_path'];
   }
 

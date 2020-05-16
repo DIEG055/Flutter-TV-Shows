@@ -12,10 +12,9 @@ class TvShowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final card = Container(
-        decoration: BoxDecoration(border: Border.all(width:1)),
+        // decoration: BoxDecoration(border: Border.all(width:1)),
         margin: EdgeInsets.symmetric(horizontal: 12),
         child: Column(
-          
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
@@ -44,21 +43,33 @@ class TvShowCard extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-  SmoothStarRating(
-          allowHalfRating: false,
-          onRated: (v) {
-           },
-          starCount: 5,
-          rating: 4.5,
-          size: 40.0,
-          halfFilledIconData:  Icons.blur_on,
-          filledIconData: Icons.blur_off,
-          // fullRatedIconData: Icons.blur_off,
-          // halfRatedIconData: Icons.blur_on,
-          color: Colors.green,
-          borderColor: Colors.green,
-          spacing:0.1
-    )
+          Container(
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Row(
+                children: <Widget>[
+                  SmoothStarRating(
+                    allowHalfRating: false,
+                    onRated: (v) {
+                    },
+                    starCount: 5,
+                    rating: (show.voteAverage/2),
+                    size: 20.0,
+                    halfFilledIconData:  Icons.star_half,
+                    filledIconData: Icons.star,
+                    color: Colors.purple,
+                    borderColor: Colors.purple,
+                    spacing:0.1
+                  ),
+                  SizedBox(width: 5.0),
+                  Text(
+                    ((show.voteAverage/2).toStringAsFixed(1)),
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )
+                ],
+                ),
+              ),
+          )
           ],
         ),
       );
@@ -66,7 +77,7 @@ class TvShowCard extends StatelessWidget {
     return GestureDetector(
       child: card,
       onTap: (){
-        Navigator.pushNamed(context, 'detalle', arguments: show );
+        Navigator.pushNamed(context, 'tvShowDetails', arguments: show );
       },
     );
   }

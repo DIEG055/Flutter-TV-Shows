@@ -1,6 +1,5 @@
 import 'package:flutter_tv_shows/src/models/directorModel.dart';
 import 'package:flutter_tv_shows/src/models/episodeModel.dart';
-import 'package:flutter_tv_shows/src/models/networkModel.dart';
 import 'package:flutter_tv_shows/src/models/seasonModel.dart';
 
 
@@ -25,19 +24,19 @@ class TvShows {
 
 class TvShowModel {
   String backdropPath;
-  List<DirectorModel> director;
-  List<int> episodeRunTime;
+  Directors director;
+  List<dynamic> episodeRunTime;
   String firstAirDate;
-  List<Genre> genres;
+  Genres genres;
   String homepage;
   int id;
   bool inProduction;
-  List<String> languages;
+  List<dynamic> languages;
   String lastAirDate;
-  EpisodeModel lastEpisodeToAir;
+  dynamic lastEpisodeToAir;
   String name;
-  EpisodeModel nextEpisodeToAir;
-  List<NetworkModel> networks;
+  dynamic nextEpisodeToAir;
+  List<dynamic> networks;
   int numberOfEpisodes;
   int numberOfSeasons;
   List<dynamic> originCountry;
@@ -46,8 +45,8 @@ class TvShowModel {
   String overview;
   double popularity;
   String posterPath;
-  List<NetworkModel> productionCompanies;
-  List<SeasonModel> seasons;
+  List<dynamic> productionCompanies;
+  List<dynamic> seasons;
   String status;
   String type;
   double voteAverage;
@@ -86,16 +85,16 @@ class TvShowModel {
 
   TvShowModel.fromJsonMap(Map<String, dynamic> json ){
     backdropPath        = json['backdrop_path'];
-    director            = json['director'];
+    director            = Directors.fromJsonList( json['created_by']) ;
     episodeRunTime      = json['episode_run_time'];
     firstAirDate        = json['first_air_date'];
-    genres              = json['genres'];
+    genres               = Genres.fromJsonList(json['genres']);
     homepage            = json['homepage'];
     id                  = json['id'];
     inProduction        = json['in_production'];
     languages           = json['languages'];
     lastAirDate         = json['last_air_date'];
-    lastEpisodeToAir    = json['last_episode_to_air'];
+    // lastEpisodeToAir    = json['last_episode_to_air'];
     name                = json['name'];
     nextEpisodeToAir    = json['next_episode_to_air'];
     networks            = json['networks'];
@@ -108,7 +107,7 @@ class TvShowModel {
     popularity          = json['popularity'];
     posterPath          = json['poster_path'];
     productionCompanies = json['production_companies'];
-    seasons             = json['seasons'];
+    // seasons             = json['seasons'];
     status              = json['status'];
     type                = json['type'];
     voteAverage         = json['vote_average']/1;
@@ -133,6 +132,22 @@ class TvShowModel {
 
 }
 
+class Genres{
+
+  List<Genre> items = new List();
+  Genres();
+  Genres.fromJsonList(List<dynamic> jsonList){
+    
+    if ( jsonList == null ) return;
+
+    for ( var item in jsonList  ) {
+      final director = new Genre.fromJsonMap(item);
+      items.add( director );
+    }
+  }
+
+}
+
 
 class Genre {
   int id;
@@ -142,6 +157,12 @@ class Genre {
     this.id,
     this.name,
   });
+
+  Genre.fromJsonMap(Map<String, dynamic> json){
+    id   = json['id'];
+    name = json['name']; 
+
+  }
 }
 
 
