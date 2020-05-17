@@ -40,13 +40,22 @@ class DataSearch extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     // Crea los resultados que vamos a mostrar
-    return Center(
-      child: Container(
-        height: 100.0,
-        width: 100.0,
-        color: Colors.blueAccent,
-        child: Text(seleccion),
-      ),
+    return FutureBuilder(
+      future: tvShowProvider.searchTvShowsByName(query),
+      builder: (BuildContext context, AsyncSnapshot<List<TvShowModel>> snapshot) {
+          if( snapshot.hasData ) {
+            final shows = snapshot.data;
+            return ListView(
+              children: shows.map( (show) {
+                return SearchCard(show: show);
+              }).toList()
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator()
+            );
+          }
+      },
     );
   }
 

@@ -1,19 +1,42 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_tv_shows/src/bloc/favoritesBloc.dart';
 
 import 'package:flutter_tv_shows/src/models/networkModel.dart';
 import 'package:flutter_tv_shows/src/models/tvShowModel.dart';
 import 'package:flutter_tv_shows/src/providers/tvShowProvider.dart';
 import 'package:flutter_tv_shows/src/widgets/seasonCard.dart';
 
-class ShowDetailspage extends StatelessWidget {
+class ShowDetailspage extends StatefulWidget {
+
+  @override
+  _ShowDetailspageState createState() => _ShowDetailspageState();
+}
+
+class _ShowDetailspageState extends State<ShowDetailspage> {
+
+  bool isFavorite = false;
+  StreamSubscription<bool> streamSubscription;
+
+
+  ondispose(){
+  streamSubscription.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
     
-  final TvShowModel show        = ModalRoute.of(context).settings.arguments;
-  final TvShowProvider provider = TvShowProvider();
-  final showInfo                = provider.getTvShowById(show.id);
-  final similarShowsInfo        = provider.getSimilarTvShowById(show.id);
+  final favoritesBloc    = new FavoritesBloc();
+  final TvShowModel show = ModalRoute.of(context).settings.arguments;
+  final provider         = TvShowProvider();
+  final showInfo         = provider.getTvShowById(show.id);
+  final similarShowsInfo = provider.getSimilarTvShowById(show.id);
+  streamSubscription = favoritesBloc.favoriteShowStream.listen((value) {});
+  favoritesBloc.getShow(show.id);
+  streamSubscription.onData((data) {isFavorite = data;});
+
+
 
     return Container(
       child: Scaffold(
@@ -25,9 +48,10 @@ class ShowDetailspage extends StatelessWidget {
               builder: (context, AsyncSnapshot<TvShowModel> snapshot){
                 if(snapshot.hasData){
                   final show = snapshot.data;
+                  print(show.backdropPath);
                   return SliverList(
                     delegate: SliverChildListDelegate(
-                      [ _showName(show,context),
+                      [ _showName(show,favoritesBloc,context),
                         _showMainInfo(show,context),
                         _showDetailInfo(show,context),
                         SizedBox(height: 30.0),
@@ -39,6 +63,7 @@ class ShowDetailspage extends StatelessWidget {
                     ),
                   );       
                 }else{
+                  print("no data");
                   return SliverList(
                     delegate: SliverChildListDelegate([Center(child: CircularProgressIndicator())])); 
                 }
@@ -73,7 +98,7 @@ class ShowDetailspage extends StatelessWidget {
     );
   }
 
-  _showName(TvShowModel show,BuildContext context) {
+  _showName(TvShowModel show,FavoritesBloc favoritesBloc,BuildContext context) {
 
     final _screenSize = MediaQuery.of(context).size;
 
@@ -92,11 +117,18 @@ class ShowDetailspage extends StatelessWidget {
             ),
           ),
           IconButton(
-            color: Colors.deepPurple,
-            icon: Icon(Icons.favorite_border),
-            iconSize: 30.0,
-            onPressed: (){}
-          )
+                  color: Colors.deepPurple,
+                  icon: isFavorite? Icon(Icons.favorite): Icon(Icons.favorite_border) ,
+                  iconSize: 30.0,
+                  onPressed: (){
+                    print(isFavorite);
+                    isFavorite? favoritesBloc.deleteShow(show.id): favoritesBloc.addShow(show);
+                    setState(() {
+                      isFavorite = !isFavorite;
+                    });
+                  }
+                ),
+              
         ]
       ),
     );
@@ -438,6 +470,4 @@ class ShowDetailspage extends StatelessWidget {
       ),
     );
   }
-
-
 }

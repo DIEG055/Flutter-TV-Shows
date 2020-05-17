@@ -20,12 +20,12 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
-        centerTitle: true,
-        backgroundColor: Colors.white,
+        title: Text("Home",),
+          centerTitle: false,
+        backgroundColor: Colors.purple,
         actions: <Widget>[
             IconButton(
-              color: Colors.deepPurple,
+              // color: Colors.purple,
               icon: Icon(Icons.search),
               onPressed: (){
                 showSearch(
@@ -122,11 +122,11 @@ class HomePage extends StatelessWidget {
         );
       }else{
         return Container(
-          height: 350.0,
-          child: Center(
-            child: CircularProgressIndicator()
-          )
-        );
+            height: 350.0,
+            child: Center(
+              child: CircularProgressIndicator()
+            )
+          );
       }
     },
   );
@@ -156,7 +156,7 @@ class HomePage extends StatelessWidget {
                       ),
                   ),
                   IconButton(
-                    color: Colors.deepPurple,
+                    color: Colors.purple,
                     icon: Icon(Icons.arrow_forward),
                     onPressed: (){
                 // route

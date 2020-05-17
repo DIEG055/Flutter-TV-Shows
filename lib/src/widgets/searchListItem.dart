@@ -9,6 +9,14 @@ class SearchCard extends StatelessWidget {
 
   SearchCard({@required this.show});
 
+
+  double starCount(double voteAverage){
+    double af = voteAverage.floor()/1;
+    double temp = voteAverage - 0.5;
+      return temp>= af ?  af+0.5 :  af;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final item =  Container(
@@ -59,7 +67,7 @@ class SearchCard extends StatelessWidget {
                     onRated: (v) {
                     },
                     starCount: 5,
-                    rating: (show.voteAverage),
+                    rating: starCount(show.voteAverage/2),
                     size: 20.0,
                     halfFilledIconData:  Icons.star_half,
                     filledIconData: Icons.star,
@@ -69,7 +77,7 @@ class SearchCard extends StatelessWidget {
                   ),
                   SizedBox(width: 5.0),
                   Text(
-                    (show.voteAverage.toString()),
+                    ((show.voteAverage/2).toStringAsFixed(1)),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],

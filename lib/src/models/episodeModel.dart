@@ -1,3 +1,5 @@
+import 'package:flutter_tv_shows/src/models/actorModel.dart';
+
 class Episodes {
   List<EpisodeModel> items = new List();
 
@@ -25,6 +27,7 @@ class EpisodeModel {
   int showId;
   String stillPath;
   double voteAverage;
+  Actors guessStarts;
   int voteCount;
 
   EpisodeModel({
@@ -42,17 +45,18 @@ class EpisodeModel {
   });
 
   EpisodeModel.fromJsonMap(Map<String, dynamic> json){
-    airDate    = json['air_date'];
-episodeNumber  = json['episode_number'];
-id             = json['id'];
-name           = json['name'];
-overview       = json['overview'];
-productionCode = json['production_code'];
-seasonNumber   = json['season_number'];
-showId         = json['show_id'];
-stillPath      = json['still_path'];
-voteAverage    = json['vote_average']/1;
-voteCount      = json['vote_count'];
+    airDate        = json['air_date'];
+    episodeNumber  = json['episode_number'];
+    id             = json['id'];
+    name           = json['name'];
+    overview       = json['overview'];
+    productionCode = json['production_code'];
+    seasonNumber   = json['season_number'];
+    showId         = json['show_id'];
+    stillPath      = json['still_path'];
+    voteAverage    = json['vote_average']/1;
+    voteCount      = json['vote_count'];
+    guessStarts    = Actors.fromJsonList(json['guest_stars']);
   }
 
   getStillImg() {

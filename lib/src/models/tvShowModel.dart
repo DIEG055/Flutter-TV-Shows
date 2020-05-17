@@ -96,7 +96,7 @@ class TvShowModel {
     originCountry       = json['origin_country'];
     originalLanguage    = json['original_language'];
     originalName        = json['original_name'];
-    overview            = json['overview'];
+    overview            = json['overview'] ;
     popularity          = json['popularity'];
     posterPath          = json['poster_path'];
     productionCompanies = json['production_companies'];
@@ -109,6 +109,13 @@ class TvShowModel {
     seasons             = Seasons.fromJsonList(json['seasons']);
     director            = Directors.fromJsonList( json['created_by']) ;
   }
+
+  Map<String, dynamic> toJson() => {
+    "backdrop_path"        : backdropPath, // Used
+    "id"                   : id, //Used
+    "name"                 : name, // Used
+    "vote_average"         : voteAverage, // Used
+  };
 
   getPosterImage(){
     if ( posterPath == null ) {

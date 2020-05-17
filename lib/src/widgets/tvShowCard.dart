@@ -8,6 +8,12 @@ class TvShowCard extends StatelessWidget {
   final BuildContext context;
   final TvShowModel show;
 
+  double starCount(double voteAverage){
+    double af = voteAverage.floor()/1;
+    double temp = voteAverage - 0.5;
+      return temp>= af ?  af+0.5 :  af;
+  }
+
   TvShowCard({@required this.context, @required this.show });
 
   @override
@@ -49,11 +55,11 @@ class TvShowCard extends StatelessWidget {
               child: Row(
               children: <Widget>[
                 SmoothStarRating(
-                  allowHalfRating: false,
+                  allowHalfRating: true,
                   onRated: (v) {
                   },
                   starCount: 5,
-                  rating: (show.voteAverage/2),
+                  rating: starCount(show.voteAverage/2),
                   size: 20.0,
                   halfFilledIconData:  Icons.star_half,
                   filledIconData: Icons.star,
