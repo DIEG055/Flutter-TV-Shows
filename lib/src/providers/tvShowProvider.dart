@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter_tv_shows/src/models/seasonModel.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_tv_shows/src/models/tvShowModel.dart';
@@ -157,5 +158,15 @@ class TvShowProvider{
   }
 
 
+  Future<SeasonModel> getSeasonById(int showId,int seasonId) async {
+    final url = Uri.https(_url, '3/tv/$showId/season/$seasonId', {
+      'api_key'  : _apikey,
+      'language' : _language,
+    });
+    final resp = await http.get( url );
+    final decodedData = json.decode(resp.body);
+    final season = SeasonModel.fromJsonMap(decodedData);
+    return season;
+  }
 
 }

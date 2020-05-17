@@ -71,8 +71,6 @@ class ShowDetailspage extends StatelessWidget {
         ),
       ),
     );
-
-
   }
 
   _showName(TvShowModel show,BuildContext context) {
@@ -336,7 +334,7 @@ class ShowDetailspage extends StatelessWidget {
                 initialPage: 1
               ),
               itemCount: show.seasons.items.length,
-              itemBuilder: (context, i) =>SeasonCard(context: context,  season:show.seasons.items[i] ),
+              itemBuilder: (context, i) =>SeasonCard(context: context,  season:show.seasons.items[i],showId: show.id ),
             ),
           )
       ],)
@@ -370,7 +368,7 @@ class ShowDetailspage extends StatelessWidget {
                 final shows = snapshot.data;
                 return Column(
                   children: shows.map((show) {
-                  return Container(
+                  final showItem = Container(
                     margin: EdgeInsets.symmetric(vertical: 3.0),
                     child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
@@ -417,17 +415,23 @@ class ShowDetailspage extends StatelessWidget {
                 
               ),
           ),
-                      ); 
-                      }).toList(),
-                );
-              }else{
-                return Container(
-                height: 400.0,
-                child: Center(
-                  child: CircularProgressIndicator()
-                )
-              );
-              }
+        ); 
+        return  GestureDetector(
+          child: showItem,
+          onTap: (){
+            Navigator.pushNamed(context, 'tvShowDetails', arguments: show);
+          },
+    );
+      }).toList(),
+        );
+      }else{
+        return Container(
+        height: 400.0,
+        child: Center(
+          child: CircularProgressIndicator()
+        )
+      );
+      }
             },
             ),
         ],

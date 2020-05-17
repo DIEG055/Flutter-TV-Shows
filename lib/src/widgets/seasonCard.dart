@@ -6,8 +6,9 @@ class SeasonCard extends StatelessWidget {
 
   final BuildContext context;
   final SeasonModel season;
+  final int showId;
 
-  SeasonCard({@required this.context, @required this.season });
+  SeasonCard({@required this.context, @required this.season, @required this.showId });
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +28,15 @@ class SeasonCard extends StatelessWidget {
                 )
               ]
                 ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: FadeInImage(
-                image: NetworkImage( season.getPosterImg()),
-                placeholder: AssetImage('assets/img/no-image.jpg'),
-                fit: BoxFit.cover,
+            child: Hero(
+              tag: season.id,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15.0),
+                child: FadeInImage(
+                  image: NetworkImage( season.getPosterImg()),
+                  placeholder: AssetImage('assets/img/no-image.jpg'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -50,7 +54,7 @@ class SeasonCard extends StatelessWidget {
     return GestureDetector(
       child: card,
       onTap: (){
-        Navigator.pushNamed(context, 'season', arguments: season );
+        Navigator.pushNamed(context, 'seasonDetails', arguments: {"season":season,"showId":showId} );
       },
     );
   }

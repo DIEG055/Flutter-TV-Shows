@@ -43,16 +43,16 @@ class EpisodeModel {
 
   EpisodeModel.fromJsonMap(Map<String, dynamic> json){
     airDate    = json['air_date'];
-episodeNumber  = json['episode_number'].cast<int>();
-id             = json['id'].cast<int>();
+episodeNumber  = json['episode_number'];
+id             = json['id'];
 name           = json['name'];
 overview       = json['overview'];
 productionCode = json['production_code'];
 seasonNumber   = json['season_number'];
-showId         = json['show_id'].cast<int>();
-stillPath      = json['still_path'].cast<int>();
+showId         = json['show_id'];
+stillPath      = json['still_path'];
 voteAverage    = json['vote_average']/1;
-voteCount      = json['vote_count'].cast<int>();
+voteCount      = json['vote_count'];
   }
 
   getStillImg() {

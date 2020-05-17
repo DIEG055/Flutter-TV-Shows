@@ -24,7 +24,7 @@ class SeasonModel {
   String overview;
   String posterPath;
   int seasonNumber;
-  List<EpisodeModel> episodes;
+  Episodes episodes;
 
   SeasonModel({
     this.airDate,
@@ -38,14 +38,14 @@ class SeasonModel {
   });
 
   SeasonModel.fromJsonMap(Map<String, dynamic> json ){
-    airDate      = json['airDate'];
-    episodeCount = json['episode_count'];
+    airDate      = json['air_date'];
     id           = json['id'];
     name         = json['name'];
     overview     = json['overview'];
     posterPath   = json['poster_path'];
     seasonNumber = json['season_number'];
-    episodes     = json['episodes'];
+    episodes     = Episodes.fromJsonList(json['episodes']);
+    episodeCount = episodes.items.length;
   }
 
   getPosterImg() {
