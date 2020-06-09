@@ -5,7 +5,7 @@ to get information about series, their seasons and episodes.
 
 ![alt text][logo]
 
-[logo]: https://github.com/DIEG055/Flutter-TV-Shows/tree/develop/assets/img/icon.png "App Icon"
+[logo]: https://raw.githubusercontent.com/DIEG055/Flutter-TV-Shows/develop/assets/img/icon.png "App Icon"
 
 ## Mockup
 
