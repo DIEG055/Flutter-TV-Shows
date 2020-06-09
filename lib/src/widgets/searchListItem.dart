@@ -71,8 +71,8 @@ class SearchCard extends StatelessWidget {
                     size: 20.0,
                     halfFilledIconData:  Icons.star_half,
                     filledIconData: Icons.star,
-                    color: Colors.purple,
-                    borderColor: Colors.purple,
+                    color: Theme.of(context).primaryColor,
+                    borderColor: Theme.of(context).primaryColor,
                     spacing:0.1
                   ),
                   SizedBox(width: 5.0),

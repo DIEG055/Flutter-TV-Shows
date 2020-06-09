@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_tv_shows/src/pages/favoritesTvShowsPage.dart';
-
-import 'package:flutter_tv_shows/src/pages/homePage.dart';
+import 'favoritesTvShows/favoritesTvShowsPage.dart';
+import 'homePage/homePage.dart';
 
 class MainPage extends StatefulWidget {
 
@@ -32,7 +31,7 @@ class _MainPageState extends State<MainPage> {
 
       case 0: return HomePage();
 
-      case 2: return FavoritesShowsPage();
+      case 1: return FavoritesShowsPage();
 
       default:
         return HomePage();
@@ -55,10 +54,10 @@ class _MainPageState extends State<MainPage> {
           icon: Icon( Icons.home ),
           title: Text('Home')
         ),
-        BottomNavigationBarItem(
-          icon: Icon( Icons.search ),
-          title: Text('Search')
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon( Icons.search ),
+        //   title: Text('Search')
+        // ),
         BottomNavigationBarItem(
           icon: Icon( Icons.favorite ),
           title: Text('Favorites')

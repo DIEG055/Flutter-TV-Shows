@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tv_shows/src/pages/episodeDetailsPage.dart';
-import 'package:flutter_tv_shows/src/pages/homePage.dart';
+
 import 'package:flutter_tv_shows/src/pages/main.dart';
-import 'package:flutter_tv_shows/src/pages/seasonDetailsPage.dart';
-import 'package:flutter_tv_shows/src/pages/tvShowDetailsPage.dart';
+
+import 'src/pages/episodeDetails/episodeDetailsPage.dart';
+import 'src/pages/homePage/homePage.dart';
+import 'src/pages/seasonDetail/seasonDetailsPage.dart';
+import 'src/pages/tvShowDetail/tvShowDetailsPage.dart';
+
 
 
 void main() => runApp(MyApp());
@@ -25,8 +28,8 @@ class MyApp extends StatelessWidget {
           
       },
       theme: ThemeData(
-        primaryColor: Colors.purple,
-        accentColor: Colors.deepPurpleAccent
+        primaryColor: Color(0xff3AE2AE),
+        accentColor: Color(0xff26E5AA),
       ),
     );
   }

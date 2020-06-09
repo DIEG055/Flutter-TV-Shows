@@ -1,40 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tv_shows/src/bloc/favoritesBloc.dart';
 import 'package:flutter_tv_shows/src/models/tvShowModel.dart';
 
-class FavoritesShowsPage extends StatelessWidget {
+class TvShowsSimilarShow extends StatelessWidget {
 
+  final Future<List<TvShowModel>> showFuture;
 
-  final favoritesBloc = FavoritesBloc();
+  TvShowsSimilarShow({this.showFuture});
+
 
   @override
   Widget build(BuildContext context) {
-  
-  favoritesBloc.getShows();
-  
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Favorites",style: TextStyle(color: Colors.purple),),
-          centerTitle: false,
-          backgroundColor: Colors.white,
-          actions: <Widget>[
-            IconButton(
-              color: Colors.purple,
-              icon: Icon(Icons.delete),
-              onPressed: (){ favoritesBloc.deleteAllShows();  }
-            )
-          ],
-        ),
-        
-        body: SingleChildScrollView(child: _similarShowsInfo( context),)
-      )
-    );
-  }
-
-  _similarShowsInfo( BuildContext context) {
-
-    final _screenSize = MediaQuery.of(context).size;
+      final _screenSize = MediaQuery.of(context).size;
 
     return Container(
       margin: EdgeInsets.only(
@@ -45,13 +21,18 @@ class FavoritesShowsPage extends StatelessWidget {
         ),
       child: Column(
         children: <Widget>[
-          
+          Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Similar",
+            style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),
+            textAlign:TextAlign.left,)),
           SizedBox(height: 5.0,),
-          StreamBuilder<TvShows>(
-            stream: favoritesBloc.favoritesShowsStream,
-            builder: (BuildContext context, AsyncSnapshot<TvShows>  snapshot) {
+          FutureBuilder(
+            future: showFuture,
+            builder: (BuildContext context, AsyncSnapshot<List<TvShowModel>>  snapshot) {
               if(snapshot.hasData){
-                final shows = snapshot.data.items;
+                final shows = snapshot.data;
                 return Column(
                   children: shows.map((show) {
                   final showItem = Container(
@@ -61,14 +42,14 @@ class FavoritesShowsPage extends StatelessWidget {
                     child: Stack(
                 children:  <Widget>[
                   FadeInImage(
-                    height: _screenSize.height*0.2,
+                    height: _screenSize.height*0.15,
                     width: double.infinity,
                     image: NetworkImage( show.getBackdropImage()),
                     placeholder: AssetImage('assets/img/no-image.jpg'),
                     fit: BoxFit.cover, 
                   ),
                   Container(
-                    height: _screenSize.height*0.2,
+                    height: _screenSize.height*0.15,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       gradient: LinearGradient(
@@ -78,7 +59,10 @@ class FavoritesShowsPage extends StatelessWidget {
                           Colors.grey.withOpacity(0.0),
                           Colors.black.withOpacity(0.7),
                         ],
-                        stops: [0.0, 1.0]
+                        stops: [
+                          0.0,
+                          1.0
+                        ]
                       )
                     ),
                   ),
@@ -95,20 +79,16 @@ class FavoritesShowsPage extends StatelessWidget {
                       ),
                   )
                 ]
+                
               ),
           ),
         ); 
-        return  Dismissible(
-          key: UniqueKey(),
-          // background: Container( color: Colors.red ),
-          onDismissed: ( direction ) => favoritesBloc.deleteShow(show.id) ,
-          child: GestureDetector(
-            child: showItem,
-            onTap: (){
-              Navigator.pushNamed(context, 'tvShowDetails', arguments: show);
-            },
-          ),
-        );
+        return  GestureDetector(
+          child: showItem,
+          onTap: (){
+            Navigator.pushNamed(context, 'tvShowDetails', arguments: show);
+          },
+    );
       }).toList(),
         );
       }else{
@@ -124,7 +104,6 @@ class FavoritesShowsPage extends StatelessWidget {
         ],
       ),
     );
+  
   }
-
-
 }
