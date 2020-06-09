@@ -1,16 +1,12 @@
-# flutter_tv_shows
+# Tv Shows
 
-A new Flutter project.
+A Flutter project that use the [TheMovieDB API](https://developers.themoviedb.org/4/getting-started/authorization)
+to get information about series, their seasons and episodes.
 
-## Getting Started
+![alt text][logo]
 
-This project is a starting point for a Flutter application.
+[logo]: https://github.com/DIEG055/Flutter-TV-Shows/tree/develop/assets/img/icon.png "App Icon"
 
-A few resources to get you started if this is your first Flutter project:
+## Mockup
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Mockup Hecho en Adobe Xd [Link](https://xd.adobe.com/view/1e9e5efd-ea82-463a-6ce5-a23101d80c9f-68af/)
