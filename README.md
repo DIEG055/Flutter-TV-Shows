@@ -1,7 +1,7 @@
 # Tv Shows
 
 A Flutter project that use the [TheMovieDB API](https://developers.themoviedb.org/4/getting-started/authorization)
-to get information about series, their seasons and episodes.
+to get information about series, seasons and episodes.
 
 <img src="https://raw.githubusercontent.com/DIEG055/Flutter-TV-Shows/develop/assets/img/icon.png" alt="drawing" width="200"/>
 
